@@ -34,8 +34,10 @@ jobs:
       - name: Install Dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --without dev
+        shell: bash
       - name: Install PyInstaller
         run: poetry run pip install pyinstaller
+        shell: bash
       - name: Build Executable (Linux/MacOS)
         if: runner.os != 'Windows'
         run: |
@@ -49,8 +51,8 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           poetry run pyinstaller --onefile rgg_save_tool/rgg_save_tool.py
-          Move-Item -Path dist\rgg_save_tool.exe -Destination dist\rgg_save_tool-windows.exe
-        shell: pwsh
+          mv dist/rgg_save_tool.exe dist/rgg_save_tool-windows.exe
+        shell: bash
       - name: Upload Raw Executable
         uses: actions/upload-artifact@v4
         with:
