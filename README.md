@@ -51,7 +51,8 @@ added proper checksum calculation and automatic game detection to the code, and 
 - Ishin platform format conversion code, and Unit tests by [@jeottesen](https://github.com/jeottesen)
 - YLAD GOG Key discovered by [@Timo654](https://github.com/Timo654)
 - Yakuza Kiwami 2 Key discovered by [@simontime](https://github.com/simontime)
-- Like a Dragon: Infinite Wealth Key discovered by [Committee of Nerds](https://www.youtube.com/watch?v=CjN4aUI-RJM)
+- Like a Dragon: Infinite Wealth Key discovered by [Committee of Nerds](https://www.youtube.com/watch?v=kpVhkhlQNE8)
+- Yakuza Kiwami 2 Rerelease save provided by spah!
 
 ## Finding save keys
 

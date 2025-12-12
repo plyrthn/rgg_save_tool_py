@@ -16,6 +16,7 @@ game_keys = {
     "y7": "STarYZgr3DL11",
     "y7_gog": "r3DL11STarYZg",
     "yk2": "STarYZgr3DL11",
+    "yk2R": "STarYZgr3DL11",
     "y8": "STarYZgr3DL11",
     "v5b": "STarYZgr3DL11",
     "yp": "STarYZgr3DL11",
@@ -31,6 +32,7 @@ game_names = {
     "y7": "Yakuza 7 (y7)",
     "y7_gog": "Yakuza 7 GoG (y7_gog)",
     "yk2": "Yakuza Kiwami 2 (yk2)",
+    "yk2R": "Yakuza Kiwami 2 Re-Release (yk2R)",
     "y8": "Like a Dragon: Infinite Wealth (y8)",
     "v5b": "Virtua Fighter 5 Open Beta (v5b)",
     "yp": "Like a Dragon: Pirate Yakuza In Hawaii (yp)",
@@ -82,6 +84,10 @@ game_headers = {
     "yp": [
         b"\x8d\x54\x46\xd6\x77\x2c\x02\x00\x70\xe1",
         b"\xdb\xf0\x4f\x04\x3c\x28\x6f\xd7\x5a\x2a",
+    ],
+    "yk2R": [
+        b"\x28\x76\x4f\x04\x3c\x28\x45\x48\x02\x73",
+        b"\x28\x76\x4f\x04\x3c\x28\x45\x48\x00\x68",
     ],
 }
 
@@ -156,9 +162,14 @@ def encrypt_data(game, data):
         checksum = crc32_checksum(data[:-16])
         encoded_data[-8:-4] = checksum.to_bytes(4, byteorder="little")
         return encoded_data
-    elif game == "y6":
+    elif game == "yk2":
         encoded_data = xor_data(data, key)
-        checksum = calculate_checksum_y6(data)
+        checksum = crc32_checksum(data)
+        encoded_data += checksum.to_bytes(4, byteorder="little")
+        return encoded_data
+    elif game == "yk2R":
+        encoded_data = xor_data(data, key)
+        checksum = crc32_checksum(data)
         encoded_data += checksum.to_bytes(4, byteorder="little")
         return encoded_data
     else:
@@ -261,9 +272,18 @@ def process_file(
             print(f"Converting Ishin save from {save_from} to {save_to}.")
             data[-12] = 0x21 if ishin_to_steam else 0x8F
         elif encrypt_flag:
-            data = encrypt_data(game, data)
+            # Beautification breaks the json parsing in game, thanks @jason098!
+            text = data.decode("utf-8")
+            json_obj = json.loads(text)
+            json_min = json.dumps(json_obj, separators=(",", ":"))
+            new_data = json_min.encode("utf-8")
+            data = encrypt_data(game, new_data)
         elif decrypt_flag:
             data = decrypt_data(game, data)
+            text = data.decode("utf-8")
+            json_obj = json.loads(text)
+            json_bty = json.dumps(json_obj, indent=4)
+            data = json_bty.encode("utf-8")
 
         with open(output_file, "wb") as f:
             f.write(data)
