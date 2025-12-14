@@ -53,6 +53,7 @@ added proper checksum calculation and automatic game detection to the code, and 
 - Yakuza Kiwami 2 Key discovered by [@simontime](https://github.com/simontime)
 - Like a Dragon: Infinite Wealth Key discovered by [Committee of Nerds](https://www.youtube.com/watch?v=kpVhkhlQNE8)
 - Yakuza Kiwami 2 Rerelease save provided by spah!
+- json beautification bug discovered by [@nyaomidev](https://github.com/nyaomidev)
 
 ## Finding save keys
 
