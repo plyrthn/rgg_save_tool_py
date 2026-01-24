@@ -3,7 +3,10 @@ name: Build and Publish to PyPI
 on:
   push:
     tags:
-      - 'v*'  # Trigger on tags starting with "v", e.g. v0.1.0
+      - 'v*'
+    paths:
+      - 'pyproject.toml'
+      - 'poetry.lock'
   workflow_dispatch:
 
 jobs:

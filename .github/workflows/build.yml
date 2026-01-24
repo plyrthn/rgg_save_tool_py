@@ -3,6 +3,8 @@ on:
   push:
     paths:
       - 'rgg_save_tool/rgg_save_tool.py'
+      - 'pyproject.toml'
+      - 'poetry.lock'
   workflow_dispatch:
 jobs:
   build:
