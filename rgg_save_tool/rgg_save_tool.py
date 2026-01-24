@@ -17,6 +17,7 @@ game_keys = {
     "y7_gog": "r3DL11STarYZg",
     "yk2": "STarYZgr3DL11",
     "yk2R": "STarYZgr3DL11",
+    "yk3": "STarYZgr3DL11",
     "y8": "STarYZgr3DL11",
     "v5b": "STarYZgr3DL11",
     "yp": "STarYZgr3DL11",
@@ -33,13 +34,14 @@ game_names = {
     "y7_gog": "Yakuza 7 GoG (y7_gog)",
     "yk2": "Yakuza Kiwami 2 (yk2)",
     "yk2R": "Yakuza Kiwami 2 Re-Release (yk2R)",
+    "yk3": "Yakuza Kiwami 3 (yk3)",
     "y8": "Like a Dragon: Infinite Wealth (y8)",
     "v5b": "Virtua Fighter 5 Open Beta (v5b)",
     "yp": "Like a Dragon: Pirate Yakuza In Hawaii (yp)",
 }
 
 # List of games that natively use msgpack encryption format
-msgpack_games = ["yp"]
+msgpack_games = ["yk3", "yp"]
 
 # Headers for automatic detection
 game_headers = {
@@ -73,6 +75,10 @@ game_headers = {
     "yk2": [
         b"\x28\x76\x4f\x04\x3c\x28\x45\x48\x02\x73",
         b"\x28\x76\x4f\x04\x3c\x28\x45\x48\x00\x68",
+    ],
+    "yk3": [
+        b"\x8d\x54\x49\xd6\x77\x2c\x02\x00\x7e\xe1",
+        b"\xda\xf0\x4f\x04\x3c\x28\x6e\xd7\x5a\x2a",
     ],
     "y8": [
         b"\x28\x76\x4f\x04\x3c\x28\x45\x48\x06\x73",
