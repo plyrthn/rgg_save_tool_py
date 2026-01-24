@@ -31,6 +31,8 @@ y7_gog: Yakuza 7 GoG
 yk2: Yakuza Kiwami 2
 y8: Like a Dragon: Infinite Wealth
 v5b: Virtua Fighter 5 Open Beta
+yp: Pirate Yakuza In Hawaii
+yk3: Yakuza Kiwami 3
 ```
 
 ``--ishin-to-steam``: Converts an Ishin save from Game Pass to Steam.
