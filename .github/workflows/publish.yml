@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -26,6 +28,7 @@ jobs:
 
       - name: Install Dependencies and Build Package
         run: |
+          poetry self add "poetry-dynamic-versioning[plugin]"
           poetry install
           poetry build
 
