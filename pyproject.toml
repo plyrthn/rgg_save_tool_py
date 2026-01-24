@@ -15,7 +15,7 @@ msgpack = "^1.1.0"
 chardet = "^5.2.0"
 msgpack-python = "^0.5.6"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 poetry-dynamic-versioning = "^1.7.1"
 
 [tool.poetry-dynamic-versioning]
