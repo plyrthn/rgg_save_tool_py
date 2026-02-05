@@ -76,6 +76,15 @@ class TestEncryptData(unittest.TestCase):
         encrypted_data = encrypt_data("y6", data)
         self.assertEqual(len(encrypted_data), len(data) + 4)
 
+        # Verify Y6 uses calculate_checksum_y6, not CRC32
+        expected_checksum = calculate_checksum_y6(data)
+        embedded_checksum = int.from_bytes(encrypted_data[-4:], "little")
+        self.assertEqual(embedded_checksum, expected_checksum)
+
+        # Verify it's NOT using CRC32
+        crc32_value = crc32_checksum(data)
+        self.assertNotEqual(embedded_checksum, crc32_value)
+
     def test_other_games(self):
         for game in game_keys.keys():
             if game not in ["ik", "y6"]:
@@ -186,3 +195,29 @@ class TestCalculateChecksumY6(unittest.TestCase):
         checksum = calculate_checksum_y6(data)
         self.assertIsInstance(checksum, int)
         self.assertGreaterEqual(checksum, 0)
+
+    def test_y6_round_trip(self):
+        # Test that Y6 encrypt/decrypt cycle maintains valid checksums
+        original_data = b'{"test":"data","value":12345}'
+
+        # Encrypt
+        encrypted = encrypt_data("y6", original_data)
+
+        # Verify checksum is correct
+        expected_checksum = calculate_checksum_y6(original_data)
+        embedded_checksum = int.from_bytes(encrypted[-4:], "little")
+        self.assertEqual(embedded_checksum, expected_checksum)
+
+        # Decrypt
+        decrypted = decrypt_data("y6", encrypted)
+        self.assertEqual(decrypted, original_data)
+
+        # Re-encrypt
+        re_encrypted = encrypt_data("y6", decrypted)
+
+        # Verify re-encrypted has valid checksum
+        re_embedded_checksum = int.from_bytes(re_encrypted[-4:], "little")
+        self.assertEqual(re_embedded_checksum, expected_checksum)
+
+        # Verify encrypted and re-encrypted are identical
+        self.assertEqual(encrypted, re_encrypted)
