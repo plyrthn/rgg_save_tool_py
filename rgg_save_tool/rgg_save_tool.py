@@ -178,6 +178,11 @@ def encrypt_data(game, data):
         checksum = crc32_checksum(data)
         encoded_data += checksum.to_bytes(4, byteorder="little")
         return encoded_data
+    elif game == "y6":
+        encoded_data = xor_data(data, key)
+        checksum = calculate_checksum_y6(data)
+        encoded_data += checksum.to_bytes(4, byteorder="little")
+        return encoded_data
     else:
         encoded_data = xor_data(data, key)
         encoded_data += crc32_checksum(data).to_bytes(4, byteorder="little")
@@ -281,7 +286,7 @@ def process_file(
             # Beautification breaks the json parsing in game, thanks @jason098!
             text = data.decode("utf-8")
             json_obj = json.loads(text)
-            json_min = json.dumps(json_obj, separators=(",", ":"))
+            json_min = json.dumps(json_obj, separators=(",", ":"), ensure_ascii=False)
             new_data = json_min.encode("utf-8")
             data = encrypt_data(game, new_data)
         elif decrypt_flag:
